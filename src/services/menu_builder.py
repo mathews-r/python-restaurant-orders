@@ -2,7 +2,6 @@ import pandas as pd
 
 from services.inventory_control import InventoryMapping
 from services.menu_data import MenuData
-from models.ingredient import Restriction
 
 DATA_PATH = "data/menu_base_data.csv"
 INVENTORY_PATH = "data/inventory_base_data.csv"
@@ -42,7 +41,3 @@ class MenuBuilder:
                 list_menu.append(dish_menu)
 
         return pd.DataFrame(list_menu)
-
-
-menu = MenuBuilder()
-print(menu.get_main_menu(Restriction.ANIMAL_MEAT))

@@ -25,12 +25,13 @@ class MenuData:
 
         for row_menu in csv_file[1:]:
             new_dish = Dish(row_menu["dish"], float(row_menu["price"]))
-            new_ingredients = Ingredient(row_menu["ingredient"])
+            new_ingredient = Ingredient(row_menu["ingredient"])
             amount = int(row_menu["recipe_amount"])
+            dish_menu = list(self.dishes)[0]
 
-            if new_dish.name == list(self.dishes)[0].name:
-                current_dish.add_ingredient_dependency(new_ingredients, amount)
+            if new_dish.name == dish_menu.name:
+                current_dish.add_ingredient_dependency(new_ingredient, amount)
             else:
                 current_dish = new_dish
                 self.dishes.add(new_dish)
-                new_dish.add_ingredient_dependency(new_ingredients, amount)
+                new_dish.add_ingredient_dependency(new_ingredient, amount)

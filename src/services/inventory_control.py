@@ -1,8 +1,8 @@
 from csv import DictReader
 from typing import Dict
 
-from src.models.dish import Recipe
-from src.models.ingredient import Ingredient
+from models.dish import Recipe
+from models.ingredient import Ingredient
 
 BASE_INVENTORY = "data/inventory_base_data.csv"
 
@@ -27,8 +27,8 @@ class InventoryMapping:
 
     # Req 5.1
     def check_recipe_availability(self, recipe: Recipe):
-        pass
+        return True if recipe in self.inventory else False
 
     # Req 5.2
     def consume_recipe(self, recipe: Recipe) -> None:
-        pass
+        ...

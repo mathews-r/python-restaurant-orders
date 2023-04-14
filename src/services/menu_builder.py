@@ -2,6 +2,7 @@ import pandas as pd
 
 from services.inventory_control import InventoryMapping
 from services.menu_data import MenuData
+from models.ingredient import Restriction
 
 DATA_PATH = "data/menu_base_data.csv"
 INVENTORY_PATH = "data/inventory_base_data.csv"
@@ -26,32 +27,22 @@ class MenuBuilder:
 
     # Req 4
     def get_main_menu(self, restriction=None) -> pd.DataFrame:
-        df = pd.read_csv(DATA_PATH)
-        dish_menu = dict()
-        ingredients = list()
+        list_menu = list()
 
-        dishes = df[
-            ["dish", "price", "ingredient", "recipe_amount"]
-        ].itertuples(index=False)
+        for dish in self.menu_data.dishes:
+            dish_menu = dict()
 
-        for dish in dishes:
-            ingredients.append(dish.ingredient)
-            if restriction is None:
-                dish_menu = {
-                    "dish_name": dish.dish,
-                    "ingredients": ingredients,
-                    "price": dish.price,
-                    "restrictions": restriction,
-                }
-            else:
-                dish_menu = {
-                    "dish_name": dish.dish,
-                    "ingredients": ingredients,
-                    "price": dish.price,
-                    "restrictions": restriction,
-                }
-        return pd.DataFrame(dish_menu)
+            if restriction not in dish.get_restrictions():
+                dish_menu["dish_name"] = dish.name
+                dish_menu["ingredients"] = [
+                    ingredient for ingredient in dish.get_ingredients()
+                ]
+                dish_menu["price"] = dish.price
+                dish_menu["restrictions"] = dish.get_restrictions()
+                list_menu.append(dish_menu)
+
+        return pd.DataFrame(list_menu)
 
 
 menu = MenuBuilder()
-print(menu.get_main_menu())
+print(menu.get_main_menu(Restriction.ANIMAL_MEAT))

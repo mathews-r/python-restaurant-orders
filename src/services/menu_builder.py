@@ -37,15 +37,19 @@ class MenuBuilder:
         for dish in dishes:
             ingredients.append(dish.ingredient)
             if restriction is None:
-                dish_menu["dish_name"] = dish.dish
-                dish_menu["ingredients"] = ingredients
-                dish_menu["price"] = dish.price
-                dish_menu["restrictions"] = restriction
+                dish_menu = {
+                    "dish_name": dish.dish,
+                    "ingredients": ingredients,
+                    "price": dish.price,
+                    "restrictions": restriction,
+                }
             else:
-                dish_menu["dish_name"] = dish.dish
-                dish_menu["ingredients"] = ingredients
-                dish_menu["price"] = dish.price
-                dish_menu["restrictions"] = restriction
+                dish_menu = {
+                    "dish_name": dish.dish,
+                    "ingredients": ingredients,
+                    "price": dish.price,
+                    "restrictions": restriction,
+                }
         return pd.DataFrame(dish_menu)
 
 

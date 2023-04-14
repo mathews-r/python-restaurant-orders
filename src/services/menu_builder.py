@@ -27,20 +27,26 @@ class MenuBuilder:
     # Req 4
     def get_main_menu(self, restriction=None) -> pd.DataFrame:
         df = pd.read_csv(DATA_PATH)
-        dados_iniciais = dict()
+        dish_menu = dict()
         ingredients = list()
-        tabela = df[
+
+        dishes = df[
             ["dish", "price", "ingredient", "recipe_amount"]
         ].itertuples(index=False)
 
-        for item in tabela:
-            ingredients.append(item[2])
-            dados_iniciais["dish_name"] = item[0]
-            dados_iniciais["ingredients"] = ingredients
-            dados_iniciais["price"] = item[1]
-            dados_iniciais["restrictions"] = restriction
-        print(len(dados_iniciais))
-        return pd.DataFrame(dados_iniciais)
+        for dish in dishes:
+            ingredients.append(dish.ingredient)
+            if restriction is None:
+                dish_menu["dish_name"] = dish.dish
+                dish_menu["ingredients"] = ingredients
+                dish_menu["price"] = dish.price
+                dish_menu["restrictions"] = restriction
+            else:
+                dish_menu["dish_name"] = dish.dish
+                dish_menu["ingredients"] = ingredients
+                dish_menu["price"] = dish.price
+                dish_menu["restrictions"] = restriction
+        return pd.DataFrame(dish_menu)
 
 
 menu = MenuBuilder()

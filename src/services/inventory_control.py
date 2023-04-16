@@ -28,7 +28,6 @@ class InventoryMapping:
     # Req 5.1
     def check_recipe_availability(self, recipe: Recipe):
         for element in recipe.items():
-            print(element[1])
             return self.inventory[element[0]] >= element[1]
 
     # Req 5.2
